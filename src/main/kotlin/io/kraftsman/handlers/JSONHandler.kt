@@ -10,11 +10,17 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.util.*
 import kotlin.random.Random
+import kotlin.time.ExperimentalTime
+import kotlin.time.days
 
 class JSONHandler : HttpFunction {
+
+    @ExperimentalTime
+    @Throws(IOException::class)
     override fun service(request: HttpRequest, response: HttpResponse) {
 
         val param = request.getFirstQueryParameter("limit").orElse("")
@@ -24,17 +30,14 @@ class JSONHandler : HttpFunction {
         val current = Clock.System.now()
         val timeZone = TimeZone.of("Asia/Taipei")
 
-        val news = mutableListOf<News>()
-        for (i in 1..limit) {
-            news.add(
-                News(
-                    id = i,
-                    title = faker.lorem().sentence(Random.nextInt(7, 15)),
-                    author = faker.name().fullName(),
-                    content = faker.lorem().paragraph(Random.nextInt(3, 10)),
-                    permalink = "https://${faker.internet().url()}/posts/${Random.nextInt(1, 100)}",
-                    publishedAt = current.toLocalDateTime(timeZone).toString()
-                )
+        val news = (1..limit).map { id ->
+            News(
+                id = id,
+                title = faker.lorem().sentence(Random.nextInt(7, 15)),
+                author = faker.name().fullName(),
+                content = faker.lorem().paragraph(Random.nextInt(3, 10)),
+                permalink = "https://${faker.internet().url()}/posts/${Random.nextInt(1, 100)}",
+                publishedAt = (current - (limit - id).days).toLocalDateTime(timeZone).toString()
             )
         }
 
