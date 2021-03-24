@@ -1,6 +1,13 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.31'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.4.31'
+    id 'org.jetbrains.kotlin.kapt' version '1.4.31'
+}
+
+kapt {
+    arguments {
+        arg("pureKotlinParser", true)
+    }
 }
 
 group = 'io.kraftsman'
@@ -8,6 +15,7 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 configurations {
@@ -20,6 +28,9 @@ dependencies {
     implementation "com.github.javafaker:javafaker:$javafaker_version"
     implementation "org.jetbrains.kotlinx:kotlinx-datetime:$kotlinx_datetime_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization_json_version"
+    implementation "com.github.ivanisidrowu.KtRssReader:kotlin:$kt_rss_reader_version"
+    implementation "com.github.ivanisidrowu.KtRssReader:annotation:$kt_rss_reader_version"
+    kapt "com.github.ivanisidrowu.KtRssReader:processor:$kt_rss_reader_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
