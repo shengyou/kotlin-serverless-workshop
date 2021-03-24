@@ -9,10 +9,16 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    invoker
+}
+
 dependencies {
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.0'
+    implementation "com.google.cloud.functions:functions-framework-api:$functions_framework_api_version"
+    invoker "com.google.cloud.functions.invoker:java-function-invoker:$java_function_invoker_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit5"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
 }
 
 test {
@@ -25,4 +31,18 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions.jvmTarget = '11'
+}
+
+tasks.register("runFunction", JavaExec) {
+    group = "gcp"
+    main = 'com.google.cloud.functions.invoker.runner.Invoker'
+    classpath(configurations.invoker)
+    inputs.files(configurations.runtimeClasspath, sourceSets.main.output)
+    args(
+            '--target', project.findProperty('runFunction.target'),
+            '--port', project.findProperty('runFunction.port') ?: 8080
+    )
+    doFirst {
+        args('--classpath', files(configurations.runtimeClasspath, sourceSets.main.output).asPath)
+    }
 }
