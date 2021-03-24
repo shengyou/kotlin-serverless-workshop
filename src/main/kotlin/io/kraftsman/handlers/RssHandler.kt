@@ -69,7 +69,7 @@ class RssHandler: HttpFunction {
             writer.write(
                 Json.encodeToString(
                     mapOf(
-                        "data" to news.sortedByDescending { it.publishedAt }
+                        "data" to news.sortedByDescending { it.publishedAt }.mapIndexed { index, news -> news.copy(id = index + 1) }
                     )
                 )
             )
