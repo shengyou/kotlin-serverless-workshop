@@ -17,12 +17,15 @@ import kotlin.random.Random
 class JSONHandler : HttpFunction {
     override fun service(request: HttpRequest, response: HttpResponse) {
 
+        val param = request.getFirstQueryParameter("limit").orElse("")
+        val limit = param.toIntOrNull() ?: 10
+
         val faker = Faker.instance(Locale.TRADITIONAL_CHINESE)
         val current = Clock.System.now()
         val timeZone = TimeZone.of("Asia/Taipei")
 
         val news = mutableListOf<News>()
-        for (i in 1..10) {
+        for (i in 1..limit) {
             news.add(
                 News(
                     id = i,
