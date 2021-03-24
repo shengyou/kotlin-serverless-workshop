@@ -10,6 +10,11 @@ import java.net.HttpURLConnection
 
 class RssHandler: HttpFunction {
 
+    private val rssSource = listOf(
+        "https://blog.jetbrains.com/kotlin/feed/",
+        "https://andyludeveloper.medium.com/feed",
+    )
+
     @Throws(IOException::class)
     override fun service(request: HttpRequest, response: HttpResponse) {
 
