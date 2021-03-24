@@ -16,6 +16,7 @@ configurations {
 dependencies {
     implementation "com.google.cloud.functions:functions-framework-api:$functions_framework_api_version"
     invoker "com.google.cloud.functions.invoker:java-function-invoker:$java_function_invoker_version"
+    implementation "com.github.javafaker:javafaker:$javafaker_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
