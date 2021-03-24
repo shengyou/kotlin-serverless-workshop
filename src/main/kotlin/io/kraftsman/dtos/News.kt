@@ -1,5 +1,6 @@
 package io.kraftsman.dtos
 
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -9,5 +10,6 @@ data class News(
     val author: String,
     val content: String,
     val permalink: String,
-    val publishedAt: String,
+    @Serializable(with = LocalDateTimeAsStringSerializer::class)
+    val publishedAt: LocalDateTime,
 )

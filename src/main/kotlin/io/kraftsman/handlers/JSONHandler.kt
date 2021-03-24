@@ -37,7 +37,7 @@ class JSONHandler : HttpFunction {
                 author = faker.name().fullName(),
                 content = faker.lorem().paragraph(Random.nextInt(3, 10)),
                 permalink = "https://${faker.internet().url()}/posts/${Random.nextInt(1, 100)}",
-                publishedAt = (current - (limit - id).days).toLocalDateTime(timeZone).toString()
+                publishedAt = (current - (limit - id).days).toLocalDateTime(timeZone)
             )
         }
 
