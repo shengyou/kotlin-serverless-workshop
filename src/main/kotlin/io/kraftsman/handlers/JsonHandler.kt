@@ -17,7 +17,7 @@ import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.days
 
-class JSONHandler : HttpFunction {
+class JsonHandler : HttpFunction {
 
     @ExperimentalTime
     @Throws(IOException::class)
