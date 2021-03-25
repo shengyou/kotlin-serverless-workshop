@@ -1,0 +1,30 @@
+###
+
+GET http://0.0.0.0:8080
+Content-Type: application/json
+Accept: application/json
+Cache-Control: no-cache
+
+> {%
+ client.test("API 回傳 HTTP 200", function () {
+     client.assert(response.status === 200, "HTTP Status Code 不是 200")
+ });
+
+ client.test("API Content-Type 是 JSON", function () {
+     var type = response.contentType.mimeType;
+     client.assert(type === "application/json", "Content-Type 錯誤")
+ });
+ %}
+
+###
+
+POST http://0.0.0.0:8080
+Content-Type: application/json
+Accept: application/json
+Cache-Control: no-cache
+
+> {%
+ client.test("API 回傳 HTTP 405", function () {
+     client.assert(response.status === 405, "HTTP Status Code 不是 405")
+ });
+ %}
