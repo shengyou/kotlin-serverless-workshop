@@ -26,6 +26,15 @@ class RssHandler: HttpFunction {
     @Throws(IOException::class)
     override fun service(request: HttpRequest, response: HttpResponse) {
 
+        if ("GET" != request.method) {
+            with(response) {
+                setStatusCode(HttpURLConnection.HTTP_BAD_METHOD)
+                writer.write("Bad method")
+            }
+
+            return
+        }
+
         val client = OkHttpClient()
         val news = mutableListOf<News>()
         val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")
