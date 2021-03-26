@@ -13,6 +13,7 @@ import tw.ktrssreader.generated.CustomChannelParser
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.time.format.DateTimeFormatter
+import java.util.*
 import java.time.LocalDateTime as JavaLocalDateTime
 
 class RssHandler: HttpFunction {
@@ -37,7 +38,7 @@ class RssHandler: HttpFunction {
 
         val client = OkHttpClient()
         val news = mutableListOf<News>()
-        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm:ss", Locale.ENGLISH)
 
         rssSource.forEach { url ->
             val rssRequest = Request.Builder().url(url).build()
